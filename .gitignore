@@ -1,9 +1,5 @@
 node_modules/
 .vscode/
 
-dist/
-
 raw assets/
 tutorials/
-
-!*.html
