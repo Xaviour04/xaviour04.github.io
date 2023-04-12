@@ -66,7 +66,7 @@ const MouseTrail: FunctionalComponent = () => {
 
         border: "1px solid rgb(255 255 255 / 50%)",
         borderRadius: "50%",
-        translate: `${window.innerWidth / 2}px ${window.innerHeight / 2}px`,
+        translate: "960px 540px",
         scale: 0,
         pointerEvents: "none",
 

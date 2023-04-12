@@ -70,12 +70,14 @@ const Header: FunctionalComponent = () => {
         []
     );
 
-    document.addEventListener("scroll", () => {
-        headerRef.current?.classList.toggle(
-            styles.scrolled,
-            window.scrollY > 16
-        );
-    });
+    useEffect(() => {
+        document.addEventListener("scroll", () => {
+            headerRef.current?.classList.toggle(
+                styles.scrolled,
+                window.scrollY > 16
+            );
+        });
+    }, []);
 
     useEffect(() => {
         window.addEventListener("resize", resizeEvent);

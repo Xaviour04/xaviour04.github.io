@@ -1,11 +1,11 @@
 import {
-  LocationProvider,
-  Router,
-  Route,
-  lazy,
-  ErrorBoundary,
-  hydrate,
-  prerender as ssr,
+    LocationProvider,
+    Router,
+    Route,
+    lazy,
+    ErrorBoundary,
+    hydrate,
+    prerender as ssr,
 } from "preact-iso";
 import { FunctionalComponent, render } from "preact";
 
@@ -17,32 +17,37 @@ const NotFound = lazy(() => import("./pages/_404"));
 const Home = lazy(() => import("./pages/home/index"));
 
 export const App: FunctionalComponent = () => {
-  window.onload = () => { document.dispatchEvent(new Event("custom:loadend")) }
+    useEffect(() => {
+        window.onload = () => {
+            document.dispatchEvent(new Event("custom:loadend"));
+        };
+        document.dispatchEvent(new Event("custom:loadend"));
+    }, []);
 
-  useEffect(() => {
-    document.dispatchEvent(new Event("custom:loadend"))
-  }, [])
+    return (
+        <LocationProvider>
+            <Header />
+            <MouseTrail />
 
-  return (
-    <LocationProvider>
-      <Header />
-      <MouseTrail />
-
-      <ErrorBoundary>
-        <Router
-          onLoadStart={() => document.dispatchEvent(new Event("custom:loadstart"))}
-          onLoadEnd={() => document.dispatchEvent(new Event("custom:loadend"))}
-        >
-          <Route path="/" component={Home} />
-          <Route default component={NotFound} />
-        </Router>
-      </ErrorBoundary>
-    </LocationProvider>
-  );
+            <ErrorBoundary>
+                <Router
+                    onLoadStart={() =>
+                        document.dispatchEvent(new Event("custom:loadstart"))
+                    }
+                    onLoadEnd={() =>
+                        document.dispatchEvent(new Event("custom:loadend"))
+                    }
+                >
+                    <Route path="/" component={Home} />
+                    <Route default component={NotFound} />
+                </Router>
+            </ErrorBoundary>
+        </LocationProvider>
+    );
 };
 
 hydrate(<App />);
 
 export async function prerender() {
-  return await ssr(<App />);
+    return await ssr(<App />);
 }
