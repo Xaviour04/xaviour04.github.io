@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="WMR App">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="modulepreload" as="script" href="/index.js">
+
+    <title>Medwin Manoj</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: white;
+        background-color: black;
+
+        scroll-behavior: smooth;
+
+        height: 500vh;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+      }
+
+      .visually-hidden {
+        border: 0;
+        clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+        clip: rect(1px, 1px, 1px, 1px);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+      }
+
+      html.loading body > *:not(#loading-screen-canvas) {
+        opacity: 0;
+        transition: opacity 500ms linear;
+      }
+
+      html body > * {
+        opacity: 1;
+        transition: opacity 500ms linear;
+      }
+    </style>
+
+    <script type="module" src="/index.f7fc50d9.js" defer=""></script>
+  
+		<link rel="stylesheet" href="/assets/style.module.e4db875f.css">
+</head>
+  <body><header class="header_limv23 mobile_limv23"><h2 class="logo_limv23">Medwin</h2><button type="button" aria-hidden="true" class="navToggleBtn_limv23"><img src="/assets/menu.5ac320c1.svg" class="openMenuBtn_limv23" style="opacity: 1;" width="32" height="32" /><img src="/assets/close-menu.abe8a29d.svg" class="closeMenuBtn_limv23" style="opacity: 0;" width="32" height="32" /></button><nav class="primaryNav_limv23" aria-hidden="true" style="display: none;"><a href="/">Home</a><a href="/projects">Projects</a><a href="/resume">Resume</a><a href="/contact">Contact</a></nav><div class="socialsNav_limv23" aria-hidden="true" style="display: none;"><a href="https://www.instagram.com/Medwin_Manoj/"><img src="/assets/instagram.218e04a7.svg" width="24" height="24" /></a><a href="https://github.com/Xaviour04"><img src="/assets/github.96fa2d8b.svg" width="24" height="24" /></a></div></header><nav class="mobileNav_limv23 closeNav_limv23"><h3 class="titles">Navigation</h3><a href="/"><img src="/assets/home.f8176e2d.svg" width="24" height="24" /><span>Home</span></a><a href="/projects"><img src="/assets/projects.434669ff.svg" width="24" height="24" /><span>Projects</span></a><a href="/resume"><img src="/assets/resume.07928482.svg" width="24" height="24" /><span>Resume</span></a><a href="/contact"><img src="/assets/contact.584d2858.svg" width="24" height="24" /><span>Contact</span></a><h3 class="titles">Socials</h3><a href="https://www.instagram.com/Medwin_Manoj/"><img src="/assets/instagram.218e04a7.svg" width="24" height="24" /><span>@Medwin_Manoj</span></a><a href="https://github.com/Xaviour04"><img src="/assets/github.96fa2d8b.svg" width="24" height="24" /><span>Xaviour04</span></a></nav><span aria-hidden="true" style="display: none; position: fixed; top: 0px; left: 0px; width: 40px; height: 40px; border: 1px solid rgb(255 255 255 / 50%); border-radius: 50%; translate: 960px 540px; scale: 0px; pointer-events: none; opacity: 0;"></span><section><h1>404: Not Found</h1><p>It's gone :(</p></section><script type="isodata"></script>
+    <canvas id="loading-screen-canvas" style="position: fixed; inset: 0; background-color: black; z-index: -1"></canvas>
+
+    <script type="module">
+      const loadingStarSpeed = 1e-2;
+      const normalStarSpeed = 1e-4;
+
+      let starsSpeed = loadingStarSpeed;
+      let animationID, isLoading;
+      const canvas = document.getElementById("loading-screen-canvas");
+
+      const starsCount = 500;
+      const depth = 1;
+      const stars = new Array(starsCount * 3).fill(0);
+
+      const resizeCanvas = () => {
+        if (canvas === null) return;
+        canvas.width = window.innerWidth;
+        canvas.height = innerHeight;
+      };
+
+      const updateAndDrawStars = () => {
+        if (isLoading) {
+          if (starsSpeed < loadingStarSpeed) {
+            starsSpeed *= 1.01
+          } else {
+            starsSpeed = loadingStarSpeed
+          }
+        } else {
+          if (starsSpeed > normalStarSpeed) {
+            starsSpeed /= 1.01
+          } else {
+            starsSpeed = normalStarSpeed
+          }
+        }
+
+        const ctx = canvas.getContext("2d");
+        const { width, height } = canvas;
+
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < stars.length; i += 3) {
+          let x = stars[i + 0];
+          let y = stars[i + 1];
+          let z = stars[i + 2];
+
+          if (z <= 0) stars[i + 2] = depth;
+          if (z > depth) stars[i + 2] = 0;
+
+          z = stars[i + 2];
+
+          const closeness = 1 - z / depth;
+
+          const projectedX = (x * depth) / z;
+          const projectedY = (y * depth) / z;
+          const radius = 2 * closeness * closeness;
+
+          const screenX = (projectedX + 0.5) * width;
+          const screenY = (projectedY + 0.5) * height;
+
+          ctx.fillStyle = `rgba(255, 255, 255, ${closeness})`;
+          ctx.beginPath();
+          ctx.arc(screenX, screenY, radius, 0, 2 * Math.PI);
+          ctx.fill();
+
+          stars[i + 2] = z - starsSpeed;
+        }
+
+        animationID = requestAnimationFrame(updateAndDrawStars);
+      };
+
+      document.addEventListener("custom:loadstart", () => {
+        isLoading = true;
+        document.documentElement.classList.add("loading");
+      });
+
+      document.addEventListener("custom:loadend", () => {
+        isLoading = false;
+        document.documentElement.classList.remove("loading");
+      });
+
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      for (let i = 0; i < starsCount * 3; i += 3) {
+        stars[i + 0] = (Math.random() - 0.5) / 4;
+        stars[i + 1] = (Math.random() - 0.5) / 4;
+        stars[i + 2] = Math.random() * depth;
+      }
+
+      updateAndDrawStars();
+    </script>
+  </body>
+</html>

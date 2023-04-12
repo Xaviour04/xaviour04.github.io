@@ -1,0 +1,1 @@
+import{s,m as e}from"../index.f7fc50d9.js";s("/assets/style.module.e4db875f.css");const a="hero_12yqaev",c="welcome_12yqaev";export default()=>e`<div class=${a}><h2 class=${c}>Hi There!</h2></div>`;
