@@ -1,0 +1,18 @@
+$font-weight-normal: 400;
+$font-weight-semi-bold: 600;
+
+$padding-x: clamp(2rem, 10vw, 8rem);
+
+.hero {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 $padding-x;
+}
+
+.welcome {
+    font-weight: $font-weight-normal;
+    font-size: 3rem;
+}

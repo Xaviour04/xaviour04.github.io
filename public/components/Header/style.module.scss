@@ -1,0 +1,229 @@
+$font-weight-normal: 400;
+$font-weight-semi-bold: 600;
+
+$padding-x: clamp(2rem, 10vw, 8rem);
+$padding-y: clamp(1rem, 5vh, 2rem);
+
+.header {
+    position: fixed;
+    inset: 0 0 auto 0;
+
+    display: grid;
+    background-color: rgb(0 0 0 / 0%);
+    align-items: center;
+
+    padding: $padding-y $padding-x;
+
+    &.mobile {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &.desktop {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    transition: 500ms ease-in-out;
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: $font-weight-semi-bold;
+    margin: auto 0;
+}
+
+.navToggleBtn {
+    background: none;
+    border: none;
+    margin-left: auto;
+    cursor: pointer;
+
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+
+    img {
+        position: absolute;
+        inset: 0;
+        display: block;
+
+        transition: opacity 500ms ease-in-out;
+    }
+
+    .closeMenuBtn {
+        opacity: 0;
+    }
+
+    .openMenuBtn {
+        opacity: 1;
+    }
+}
+
+.header.desktop {
+    $column-gap: clamp(0.25rem, 0.5vw, 4rem);
+
+    .primaryNav {
+        margin: 0 auto;
+
+        display: flex;
+        gap: $column-gap;
+
+        a {
+            padding: 0.5rem 1rem;
+        }
+    }
+
+    .socialsNav {
+        margin-left: auto;
+
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: $column-gap;
+
+        a {
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+    }
+}
+
+.header.mobile {
+    background-color: rgb(0 0 0 / 100%);
+
+    @supports (backdrop-filter: blur(3px)) {
+        background-color: rgb(0 0 0 / 33.33%);
+        backdrop-filter: blur(5px);
+    }
+}
+
+.mobileNav {
+    position: fixed;
+    inset: auto 0 0 0;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    padding: 2rem calc($padding-x - 1rem);
+    column-gap: 2rem;
+    row-gap: 0.5rem;
+
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: 1px -2px 8px rgba(255, 255, 255, 0.1);
+
+    transition: translate 500ms ease-in-out;
+
+    background-color: rgb(0 0 0);
+    @supports (backdrop-filter: blur(3px)) {
+        background-color: rgb(0 0 0 / 10%);
+        backdrop-filter: blur(3px);
+    }
+
+    &.closeNav {
+        translate: 0 100%;
+    }
+
+    &.openNav {
+        translate: 0 0;
+    }
+
+    h3 {
+        font-weight: $font-weight-normal;
+        font-size: 0.75rem;
+        padding-left: 1rem;
+
+        grid-column: 1 / span 2;
+
+        ~ h3 {
+            margin-top: 1.5rem;
+        }
+    }
+
+    a {
+        font-size: 1rem;
+        color: rgb(255 255 255);
+        text-decoration: none;
+
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+
+        border-radius: 2px;
+
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+    }
+}
+
+.mouseInteractable {
+    position: relative;
+    overflow: hidden;
+
+    background-color: rgb(0 0 0 / 50%);
+
+    &.mouseNotMoved {
+        &::before,
+        &::after {
+            opacity: 0 !important;
+        }
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    &::before {
+        --size: 10rem;
+
+        top: calc(-1 * var(--size) / 2);
+        left: calc(-1 * var(--size) / 2);
+        width: var(--size);
+        height: var(--size);
+
+        background-color: rgb(255 255 255 / 100%);
+        border-radius: 100vh;
+
+        filter: blur(32px);
+
+        translate: var(--mouse-x) var(--mouse-y);
+
+        opacity: 50%;
+        transition: opacity 250ms ease-in-out;
+    }
+
+    &::after {
+        inset: 1px;
+        backdrop-filter: blur(32px);
+        background-color: rgb(0 0 0 / 85%);
+        border-radius: inherit;
+    }
+
+    &:hover {
+        &::before {
+            opacity: 100%;
+        }
+    }
+}
+
+.desktop.scrolled {
+    $inset: clamp(.5rem, 5vmax, 2rem);
+
+    inset: $inset $inset auto $inset;
+    border-radius: 1rem;
+
+    padding-left: clamp(.5rem, 6vw, 6rem);
+    padding-right: clamp(.5rem, 6vw, 6rem);
+
+    background-color: rgb(0 0 0 / 100%);
+
+    @supports (backdrop-filter: blur(3px)) {
+        background-color: rgb(0 0 0 / 33.33%);
+        backdrop-filter: blur(5px);
+    }
+
+    box-shadow: 2px 4px 4px rgba(255 255 255 / 10%);
+}
